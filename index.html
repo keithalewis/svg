@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello World</h1>
+    <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="50" fill="blue" />
+    </svg>
+    <p id="p1"></p>.
+</body>
+    <script>
+        /**
+         * Appends a child element to a parent element identified by ID
+         * @param {string} id - The ID of the parent element
+         * @param {HTMLElement|string} child - The child element or text to append
+         */
+        function idChild(id, child) {
+            const parent = document.getElementById(id);
+            parent.appendChild(child);
+        }
+
+        /**
+         * Creates a DOM element with specified attributes and children
+         * @param {string} tag - The HTML tag name for the element
+         * @param {Object} attrs - An object containing attribute key-value pairs
+         * @param {...(string|HTMLElement)} children - Child nodes (text strings or elements)
+         * @returns {HTMLElement} The created element with attributes and children attached
+         */
+        function element(tag, attrs = {}, ...children) {
+            const el = document.createElement(tag);
+            for (const [key, value] of Object.entries(attrs)) {
+                el.setAttribute(key, value);
+            }
+            for (const child of children) {
+                if (typeof child === 'string') {
+                    el.appendChild(document.createTextNode(child));
+                } else {
+                    el.appendChild(child);
+                }
+            }
+            return el;
+        }
+        
+        idChild('p1', element('span',
+         { style: 'color: red;' },
+         'This is a dynamically created span element.')
+        );
+    </script>
+</html>
