@@ -19,6 +19,9 @@
          * @param {HTMLElement|string} child - The child element or text to append
          */
         function idChild(id, child) {
+            if (typeof id !== 'string') {
+                throw new TypeError('id must be a string');
+            }   
             const parent = document.getElementById(id);
             parent.appendChild(child);
         }
@@ -38,13 +41,16 @@
             for (const child of children) {
                 if (typeof child === 'string') {
                     el.appendChild(document.createTextNode(child));
-                } else {
+                } else if (child instanceof HTMLElement) {
                     el.appendChild(child);
+                }
+                else {
+                    throw new TypeError ('Unsupported child type:', child);
                 }
             }
             return el;
         }
-        
+
         idChild('p1', element('span',
          { style: 'color: red;' },
          'This is a dynamically created span element.')
